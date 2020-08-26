@@ -1,21 +1,44 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import { ButtonConstructor } from './components/Constructor';
+import Home from './components/Home';
+import About from './components/About';
+import OptionsPopup from './components/popups/OptionsPopup';
+
+const testButton = <ButtonConstructor label="TEST" />;
 
 export default function App() {
+  const [activeView, setActiveView] = useState('HOME');
+  const [activePopup, setActivePopup] = useState(null);
+
+  const togglePopup = (popup) => {
+    setActivePopup(popup);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={styles.root}>
+      <Text>ROOT</Text>
+      <Home
+        activeView={activeView}
+        setActiveView={setActiveView}
+        activePopup={activePopup}
+        setActivePopup={setActivePopup}
+      />
+      <About
+        setActiveView={setActiveView}
+        activeView={activeView}
+        activePopup={activePopup}
+        setActivePopup={setActivePopup}
+      />
+      <OptionsPopup activePopup={activePopup} setActivePopup={setActivePopup} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  root: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
